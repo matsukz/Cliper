@@ -13,17 +13,35 @@ echo ========================
 SET COPY=
 SET /P COPY="対応した項目の入力："
 
-if "%COPY%"=="" goto :start
-if "%COPY%"=="0" goto :end
+if "%COPY%"=="" goto start
+if %COPY%==0 goto end
 
-if "%COPY%"=="1" SET FILE =
+if %COPY%==1 SET FILE=ID
+if %COPY%==2 SET FILE=pass
+If %COPY%==3 SET FILE=mail
+if %COPY% geq 4 SET FILE="###"
 
-clip < %COPY%.clip
-echo OK
-goto :start
-echo.
+
+echo %FILE%
+if %COPY%==### (
+    goto false
+) else (
+    echo LSS4
+    clip < %FILE%.clip
+    echo %errorlevel%
+    echo OK
+    echo.
+    goto start
+)
+
+:false
+    echo 0から3の値を入力してください。
+    echo.
+    goto start
+
 
 :end
-echo.
-echo 終了します。
-pause
+    echo.
+    echo 終了します…。
+    timeout 2 /nobreak >nul
+    EXIT
