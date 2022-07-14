@@ -1,7 +1,9 @@
 @echo off
+title コピペくん
 
 :start
-    SET COPY="###"
+    SET COPY=
+    SET FILE=
     echo =======================
     echo コピーするものを選択…
     echo.
@@ -11,7 +13,6 @@
     echo (0)プログラム終了
     echo ========================
 
-    SET COPY=
     SET /P COPY="対応した項目の入力："
 
 if "%COPY%"=="" goto :start
@@ -22,15 +23,15 @@ if %COPY% geq 4 goto false
     if %COPY%==1 SET FILE=ID
     if %COPY%==2 SET FILE=pass
     If %COPY%==3 SET FILE=mail
-    echo %FILE%
     clip < %FILE%.clip
-    echo OK
+    echo.
+    echo %FILE%をコピーしました
     echo.
     goto start
 
 :false
-    echo %FILE%
-    echo 入力された値が不正です。
+    echo.
+    echo 入力された値"%COPY%"は不正です。
     echo.
     goto start
 
