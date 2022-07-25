@@ -1,5 +1,9 @@
 @echo off
-title コピペくん
+mode 50,20
+title IDCLiper
+
+if not %USERNAME% == ユーザーネーム goto :usererror
+    
 
 :start
     SET COPY=
@@ -15,14 +19,14 @@ title コピペくん
 
     SET /P COPY="対応した項目の入力："
 
-if "%COPY%"=="" goto :start
+if "%COPY%"=="" goto :blank
 if %COPY%==0 goto :end
-if %COPY% geq 4 goto false
+if %COPY% geq 4 goto :false
 
 :true
     if %COPY%==1 SET FILE=ID
-    if %COPY%==2 SET FILE=pass
-    If %COPY%==3 SET FILE=mail
+    if %COPY%==2 SET FILE=Password
+    If %COPY%==3 SET FILE=MailAddress
     clip < %FILE%.clip
     echo.
     echo %FILE%をコピーしました
@@ -35,6 +39,16 @@ if %COPY% geq 4 goto false
     echo.
     goto start
 
+:usererror
+    echo.
+    msg %USERNAME% /W 作業中のユーザー%USERNAME%では続行できません。
+    goto :end
+
+:blank
+    echo.
+    echo 文字が入力されていません。
+    goto start
+    
 :end
     echo.
     echo 終了します…。
